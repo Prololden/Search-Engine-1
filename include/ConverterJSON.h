@@ -1,7 +1,13 @@
+#pragma once
+
+#include <fstream>
 #include <string>
 #include <vector>
+#include <filesystem>
 #include <nlohmann/json.hpp>
+
 using json = nlohmann::json;
+
 class ConverterJSON {
 public:
 	ConverterJSON() = default;
