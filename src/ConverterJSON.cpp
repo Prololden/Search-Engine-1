@@ -5,13 +5,7 @@ std::vector<std::string> ConverterJSON::GetTextDocuments() {
 }
 
 int ConverterJSON::GetResponsesLimit() {
-	std::filesystem::path cfg("config.json");
-	std::ifstream file(cfg);
-	json settings;
-
-	file >> settings;
-
-	return settings["config"]["max_responses"].is_null() ? 5 : settings["config"]["max_responses"].get<int>();
+	return _config["config"]["max_responses"].is_null() ? 5 : _config["config"]["max_responses"].get<int>();
 }
 
 std::vector<std::string> ConverterJSON::GetRequests() {
@@ -22,4 +16,28 @@ void ConverterJSON::putAnswers(
 		std::vector<std::vector<std::pair<int, float>>> answers
 	) {
 
+}
+
+void ConverterJSON::read_config(std::filesystem::path path) {
+	try {
+		if (!std::filesystem::exists(path))
+			throw ExceptionConfigNotFound();
+	}
+	catch (ExceptionConfigNotFound e) {
+		std::cerr << e.what() << std::endl;
+	}
+	std::ifstream f(path);
+	f >> _config;
+}
+
+void ConverterJSON::read_requests(std::filesystem::path path) {
+	try {
+		if (!std::filesystem::exists(path))
+			throw ExceptionRequestsNotFound();
+	}
+	catch (ExceptionRequestsNotFound e) {
+		std::cerr << e.what() << std::endl;
+	}
+	std::ifstream f(path);
+	f >> _requests;
 }

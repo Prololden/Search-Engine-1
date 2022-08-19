@@ -15,6 +15,6 @@ int main()
 		return 1;
 	}
 
-	ConverterJSON CJson;
-	std::cout << "Max: " << CJson.GetResponsesLimit() << std::endl;
+	ConverterJSON cj;
+	cj.read_config("config.json");
 }
