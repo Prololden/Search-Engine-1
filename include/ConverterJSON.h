@@ -13,15 +13,15 @@ using json = nlohmann::json;
 class ConverterJSON {
 public:
 	ConverterJSON() = default;
-	std::vector<std::string> GetTextDocuments();
-	int GetResponsesLimit();
-	std::vector<std::string> GetRequests();
+	std::vector<std::string> getTextDocuments();
+	void getResponsesLimit();
 	void putAnswers(std::vector<std::vector<std::pair<int, float>>>
 		answers);
-	void read_config(std::filesystem::path path);
-	void read_requests(std::filesystem::path path);
+	void readConfig(std::filesystem::path path);
+	void readRequests(std::filesystem::path path);
 private:
-	json _config;
-	json _requests;
-	json _answers;
+	json config;
+	std::vector<std::string> requests;
+	json answers;
+	int maxResponses = 5;
 };

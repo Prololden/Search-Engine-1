@@ -1,15 +1,11 @@
 #include "ConverterJSON.h"
 
-std::vector<std::string> ConverterJSON::GetTextDocuments() {
+std::vector<std::string> ConverterJSON::getTextDocuments() {
 	return std::vector<std::string>();
 }
 
-int ConverterJSON::GetResponsesLimit() {
-	return _config["config"]["max_responses"].is_null() ? 5 : _config["config"]["max_responses"].get<int>();
-}
-
-std::vector<std::string> ConverterJSON::GetRequests() {
-	return std::vector<std::string>();
+void ConverterJSON::getResponsesLimit() {
+	maxResponses = config["config"]["max_responses"].is_null() ? 5 : config["config"]["max_responses"].get<int>();
 }
 
 void ConverterJSON::putAnswers(
@@ -18,7 +14,7 @@ void ConverterJSON::putAnswers(
 
 }
 
-void ConverterJSON::read_config(std::filesystem::path path) {
+void ConverterJSON::readConfig(std::filesystem::path path) {
 	try {
 		if (!std::filesystem::exists(path))
 			throw ExceptionConfigNotFound();
@@ -27,10 +23,10 @@ void ConverterJSON::read_config(std::filesystem::path path) {
 		std::cerr << e.what() << std::endl;
 	}
 	std::ifstream f(path);
-	f >> _config;
+	f >> config;
 }
 
-void ConverterJSON::read_requests(std::filesystem::path path) {
+void ConverterJSON::readRequests(std::filesystem::path path) {
 	try {
 		if (!std::filesystem::exists(path))
 			throw ExceptionRequestsNotFound();
@@ -39,5 +35,8 @@ void ConverterJSON::read_requests(std::filesystem::path path) {
 		std::cerr << e.what() << std::endl;
 	}
 	std::ifstream f(path);
+	json _requests;
 	f >> _requests;
+	requests = { _requests["requests"].begin(), _requests["requests"].end() };
+	std::cout << requests[0] << std::endl;
 }
