@@ -21,6 +21,7 @@ void ConverterJSON::readConfig(std::filesystem::path path) {
 	}
 	catch (ExceptionConfigNotFound e) {
 		std::cerr << e.what() << std::endl;
+		return;
 	}
 	std::ifstream f(path);
 	f >> config;
@@ -33,6 +34,7 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 	}
 	catch (ExceptionRequestsNotFound e) {
 		std::cerr << e.what() << std::endl;
+		return;
 	}
 	std::ifstream f(path);
 	json _requests;
