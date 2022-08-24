@@ -4,6 +4,14 @@ std::vector<std::string> ConverterJSON::getTextDocuments() {
 	return std::vector<std::string>();
 }
 
+std::vector<std::string> ConverterJSON::getRequests() {
+	return requests;
+}
+
+std::vector<std::string> ConverterJSON::getFiles() {
+	return { config["files"].begin(), config["files"].end() };
+}
+
 void ConverterJSON::getResponsesLimit() {
 	maxResponses = config["config"]["max_responses"].is_null() ? 5 : config["config"]["max_responses"].get<int>();
 }
@@ -41,6 +49,5 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 	json _requests;
 	f >> _requests;
 	requests = { _requests["requests"].begin(), _requests["requests"].end() };
-	std::cout << requests[0] << std::endl;
 	f.close();
 }

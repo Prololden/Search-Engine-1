@@ -1,5 +1,5 @@
 #include "../include/InvertedIndex.h"
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 using namespace std;
 void TestInvertedIndexFunctionality(
 	const vector<string>& docs,
@@ -35,14 +35,14 @@ TEST(TestCaseInvertedIndex, TestBasic2) {
 	"milk milk milk milk water water water",
 	"milk water water",
 	"milk milk milk milk milk water water water water water",
-	"americano cappuccino"
+	"americano cappuchino"
 	};
 	const vector<string> requests = { "milk", "water", "cappuchino" };
 	const vector<vector<Entry>> expected = {
 		{
 			{0, 4}, {1, 1}, {2, 5}
 		}, {
-			{0, 2}, {1, 2}, {2, 5}
+			{0, 3}, {1, 2}, {2, 5}
 		}, {
 			{3, 1}
 		}
@@ -56,7 +56,8 @@ TEST(TestCaseInvertedIndex, TestInvertedIndexMissingWord) {
 	};
 	const vector<string> requests = { "m", "statement" };
 	const vector<vector<Entry>> expected = {
-	{}, {
+		{},
+		{
 			{1, 1}
 		}
 	};

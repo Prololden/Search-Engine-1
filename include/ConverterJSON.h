@@ -19,6 +19,8 @@ public:
 		answers);
 	void readConfig(std::filesystem::path path);
 	void readRequests(std::filesystem::path path);
+	std::vector<std::string> getRequests();
+	std::vector<std::string> getFiles();
 private:
 	json config;
 	std::vector<std::string> requests;
