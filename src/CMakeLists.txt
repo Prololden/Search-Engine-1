@@ -1,9 +1,10 @@
 cmake_minimum_required (VERSION 3.8)
 
 set(Src
-	ConverterJSON.cpp
-	SearchEngine.cpp
-	main.cpp
+	"ConverterJSON.cpp"
+	"SearchEngine.cpp"
+	"InvertedIndex.cpp"
+	"main.cpp"
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
