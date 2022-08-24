@@ -25,6 +25,7 @@ void ConverterJSON::readConfig(std::filesystem::path path) {
 	}
 	std::ifstream f(path);
 	f >> config;
+	f.close();
 }
 
 void ConverterJSON::readRequests(std::filesystem::path path) {
@@ -41,4 +42,5 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 	f >> _requests;
 	requests = { _requests["requests"].begin(), _requests["requests"].end() };
 	std::cout << requests[0] << std::endl;
+	f.close();
 }

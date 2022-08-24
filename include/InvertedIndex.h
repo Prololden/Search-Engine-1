@@ -1,14 +1,16 @@
 #pragma once
 
+#include <filesystem>
 #include <map>
 #include <string>
 #include <vector>
 
+using freqType = std::map<std::string, std::vector<Entry>>;
 
 struct Entry {
-	size_t doc_id, count;
+	size_t docId, count = 0;
 	bool operator ==(const Entry& other) const {
-		return (doc_id == other.doc_id &&
+		return (docId == other.docId &&
 			count == other.count);
 	}
 };
@@ -17,9 +19,9 @@ class InvertedIndex {
 public:
 	InvertedIndex() = default;
 	void updateDocumentBase(std::vector<std::string> inputDocs);
-	std::vector<Entry> getWordCount(const std::string& word);
 
 private:
+	freqType getWordsInFile(std::string filepath, int idDoc);
 	std::vector<std::string> docs;
-	std::map<std::string, std::vector<Entry>> freqDict;
+	freqType freqDict;
 };
