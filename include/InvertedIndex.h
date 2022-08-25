@@ -21,9 +21,9 @@ public:
 	InvertedIndex() = default;
 	void updateDocumentBase(std::vector<std::string> inputDocs);
 	std::vector<Entry> getWordCount(const std::string& word);
-	freqType getWordsInFile(std::string filepath, int idDoc);
 
 private:
+	freqType getWordsInFile(std::string filepath, int idDoc);
 	std::vector<std::string> docs;
 	freqType freqDict;
 };

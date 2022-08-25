@@ -48,17 +48,18 @@ freqType InvertedIndex::getWordsInFile(std::string filepath, int idDoc) {
 	}
 	freqType res;
 	std::ifstream file(filepath);
-	//std::istringstream file(filepath);
-	std::istream_iterator<std::string> it(file);
-	while (it != std::istream_iterator<std::string>()) {
-		std::string word = *it;
-		std::transform(word.begin(), word.end(), word.begin(), tolower);
-		if (res.find(word) == res.end()) {
-			res[word].push_back({ idDoc, 0 });
+	if (file.is_open()) {
+		std::istream_iterator<std::string> it(file);
+		while (it != std::istream_iterator<std::string>()) {
+			std::string word = *it;
+			std::transform(word.begin(), word.end(), word.begin(), tolower);
+			if (res.find(word) == res.end()) {
+				res[word].push_back({ idDoc, 0 });
+			}
+			res[word][0].count++;
+			it++;
 		}
-		res[word][0].count++;
-		it++;
+		file.close();
 	}
-	file.close();
 	return res;
 }

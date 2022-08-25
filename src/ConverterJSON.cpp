@@ -1,9 +1,5 @@
 #include "ConverterJSON.h"
 
-std::vector<std::string> ConverterJSON::getTextDocuments() {
-	return std::vector<std::string>();
-}
-
 std::vector<std::string> ConverterJSON::getRequests() {
 	return requests;
 }
@@ -12,14 +8,33 @@ std::vector<std::string> ConverterJSON::getFiles() {
 	return { config["files"].begin(), config["files"].end() };
 }
 
-void ConverterJSON::getResponsesLimit() {
-	maxResponses = config["config"]["max_responses"].is_null() ? 5 : config["config"]["max_responses"].get<int>();
+int ConverterJSON::getResponsesLimit() {
+	return config["config"]["max_responses"].is_null() ? 5 : config["config"]["max_responses"].get<int>();
 }
 
 void ConverterJSON::putAnswers(
 		std::vector<std::vector<std::pair<int, float>>> answers
 	) {
+	json data;
+	for (size_t i = 0, ie = answers.size(); i != ie; ++i) {
+		std::ostringstream ss;
+		ss << "request" << std::setw(3) << std::setfill('0') << i;
+		std::string reqId(ss.str());
 
+		if (answers[i].empty())
+			data["answers"][reqId]["result"] = "false";
+		else {
+			data["answers"][reqId]["result"] = "true";
+			for (const auto& rel : answers[i]) {
+				if (rel.second > 0.0)
+					data["answers"][reqId]["relevance"] += { {"doc_id", rel.first}, { "rank", rel.second }};
+			}
+		}
+	}
+
+	std::ofstream file("answers.json");
+	file << data.dump(4);
+	file.close();
 }
 
 void ConverterJSON::readConfig(std::filesystem::path path) {
@@ -32,8 +47,10 @@ void ConverterJSON::readConfig(std::filesystem::path path) {
 		return;
 	}
 	std::ifstream f(path);
-	f >> config;
-	f.close();
+	if (f.is_open()) {
+		f >> config;
+		f.close();
+	}
 }
 
 void ConverterJSON::readRequests(std::filesystem::path path) {
@@ -46,8 +63,10 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 		return;
 	}
 	std::ifstream f(path);
-	json _requests;
-	f >> _requests;
-	requests = { _requests["requests"].begin(), _requests["requests"].end() };
-	f.close();
+	if (f.is_open()) {
+		json _requests;
+		f >> _requests;
+		requests = { _requests["requests"].begin(), _requests["requests"].end() };
+		f.close();
+	}
 }
