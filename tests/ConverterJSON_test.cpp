@@ -62,12 +62,12 @@ TEST(ConverterJSON, getRequests) {
 
 TEST(ConverterJSON, getFiles) {
 	std::vector<std::string> files{
+		"files/text0.txt",
 		"files/text1.txt",
 		"files/text2.txt",
 		"files/text3.txt",
 		"files/text4.txt",
 		"files/text5.txt",
-		"files/text6.txt",
 	};
 	json data;
 	data["files"] = files;

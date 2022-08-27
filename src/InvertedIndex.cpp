@@ -1,9 +1,9 @@
 #include "InvertedIndex.h"
 #include "Exceptions.h"
-#include <future>
-#include <iterator>
-#include <fstream>
-#include <iostream>
+
+freqType InvertedIndex::getFreqDict() {
+	return freqDict;
+}
 
 void InvertedIndex::updateDocumentBase(std::vector<std::string> inputDocs) {
 	std::vector<std::future<freqType>> res;

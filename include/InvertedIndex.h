@@ -4,6 +4,10 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <future>
+#include <iterator>
+#include <fstream>
+#include <iostream>
 
 struct Entry {
 	int docId;
@@ -21,6 +25,7 @@ public:
 	InvertedIndex() = default;
 	void updateDocumentBase(std::vector<std::string> inputDocs);
 	std::vector<Entry> getWordCount(const std::string& word);
+	freqType getFreqDict();
 
 private:
 	freqType getWordsInFile(std::string filepath, int idDoc);
