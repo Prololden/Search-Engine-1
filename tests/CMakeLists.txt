@@ -4,15 +4,18 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SrcFiles
 	${MY_SRC_DIR}/InvertedIndex.cpp
+	${MY_SRC_DIR}/SearchEngine.cpp
+	${MY_SRC_DIR}/ConverterJSON.cpp
 )
 
 set(TestsFiles
-	test01.cpp
 	InvertedIndex_test.cpp
+	SearchEngine_test.cpp
+	ConverterJSON_test.cpp
 )
 
 add_executable(GtestTests ${TestsFiles} ${SrcFiles})
-target_link_libraries(GtestTests GTest::gtest_main)
+target_link_libraries(GtestTests nlohmann_json::nlohmann_json GTest::gtest_main)
 include(GoogleTest)
 target_include_directories(GtestTests PUBLIC ${MY_INCLUDE_DIR})
 gtest_discover_tests(GtestTests)

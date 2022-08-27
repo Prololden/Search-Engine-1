@@ -20,7 +20,10 @@ public:
 	void readRequests(std::filesystem::path path);
 	std::vector<std::string> getRequests();
 	std::vector<std::string> getFiles();
+	bool isConfigOpen();
+	bool isRequestsOpen();
 private:
+	bool isCfgOpen = false, isReqOpen = false;
 	json config;
 	std::vector<std::string> requests;
 	json answers;

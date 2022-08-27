@@ -48,6 +48,7 @@ void ConverterJSON::readConfig(std::filesystem::path path) {
 	}
 	std::ifstream f(path);
 	if (f.is_open()) {
+		isCfgOpen = true;
 		f >> config;
 		f.close();
 	}
@@ -64,9 +65,18 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 	}
 	std::ifstream f(path);
 	if (f.is_open()) {
+		isReqOpen = true;
 		json _requests;
 		f >> _requests;
 		requests = { _requests["requests"].begin(), _requests["requests"].end() };
 		f.close();
 	}
+}
+
+bool ConverterJSON::isConfigOpen() {
+	return isCfgOpen;
+}
+
+bool ConverterJSON::isRequestsOpen() {
+	return isReqOpen;
 }
