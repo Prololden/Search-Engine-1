@@ -1,7 +1,7 @@
 ﻿#include "SearchEngine.h"
 
 std::vector<std::vector<RelativeIndex>> SearchServer::search(const
-	std::vector<std::string>& queries_input) {
+	std::vector<std::string>& queries_input) const {
 	std::vector<std::vector<RelativeIndex>> res;
 
 	for (auto&& e : queries_input) {
@@ -10,7 +10,7 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const
 	return res;
 }
 
-std::vector<RelativeIndex> SearchServer::searchWord(std::string searchString) {
+std::vector<RelativeIndex> SearchServer::searchWord(std::string searchString) const {
 	std::vector<RelativeIndex> res(maxResponses);
 	std::transform(searchString.begin(), searchString.end(), searchString.begin(), tolower);
 
@@ -28,13 +28,11 @@ std::vector<RelativeIndex> SearchServer::searchWord(std::string searchString) {
 	if (rel.empty())
 		return {};
 
-    for (auto&& e : rel)
-    {
+    for (auto&& e : rel) {
         if (e.second > min) {
             RelativeIndex rdx = { e.first, e.second };
 
-            for (size_t i = 0, ie = res.size(); i != ie; ++i)
-            {
+            for (size_t i = 0, ie = res.size(); i != ie; ++i) {
                 if (e.second > res[i].rank) {
                     res.insert(res.begin() + i, rdx);
                     break;
@@ -47,8 +45,7 @@ std::vector<RelativeIndex> SearchServer::searchWord(std::string searchString) {
     }
 
     float max = res[0].rank;
-    for (auto&& i : res)
-    {
+    for (auto&& i : res) {
         i.rank /= max;
         std::stringstream ss;
         ss << std::setprecision(3) << i.rank;

@@ -1,20 +1,21 @@
 #include "ConverterJSON.h"
 
-std::vector<std::string> ConverterJSON::getRequests() {
+std::vector<std::string> ConverterJSON::getRequests() const {
 	return requests;
 }
 
-std::vector<std::string> ConverterJSON::getFiles() {
+std::vector<std::string> ConverterJSON::getFiles() const {
 	return { config["files"].begin(), config["files"].end() };
 }
 
-int ConverterJSON::getResponsesLimit() {
-	return config["config"]["max_responses"].is_null() ? 5 : config["config"]["max_responses"].get<int>();
+int ConverterJSON::getResponsesLimit() const {
+	const int defaultLimit = 5; // if not set in config.json default limit 5
+	return config["config"]["max_responses"].is_null() ? defaultLimit : config["config"]["max_responses"].get<int>();
 }
 
 void ConverterJSON::putAnswers(
 		std::vector<std::vector<std::pair<int, float>>> answers
-	) {
+	) const {
 	json data;
 	for (size_t i = 0, ie = answers.size(); i != ie; ++i) {
 		std::ostringstream ss;
@@ -73,10 +74,10 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 	}
 }
 
-bool ConverterJSON::isConfigOpen() {
+bool ConverterJSON::isConfigOpen() const {
 	return isCfgOpen;
 }
 
-bool ConverterJSON::isRequestsOpen() {
+bool ConverterJSON::isRequestsOpen() const {
 	return isReqOpen;
 }

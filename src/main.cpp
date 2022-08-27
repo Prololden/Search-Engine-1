@@ -7,9 +7,10 @@ int main()
 	std::filesystem::path req("requests.json");
 
 	ConverterJSON cj;
-	cj.getResponsesLimit();
 	cj.readConfig(cfg);
 	cj.readRequests(req);
+	if (!cj.isConfigOpen() || !cj.isRequestsOpen())
+		return 1;
 	InvertedIndex idx;
 	idx.updateDocumentBase(cj.getFiles());
 	auto requests = cj.getRequests();
@@ -20,7 +21,7 @@ int main()
 	for (size_t i = 0, ie = answers.size(); i != ie; ++i) {
 		result.emplace_back();
 		for (auto e : answers[i])
-			result[i].push_back({ e.docId, e.rank });
+			result[i].push_back({ static_cast<int>(e.docId), e.rank });
 	}
 	cj.putAnswers(result);
 }

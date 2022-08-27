@@ -24,11 +24,11 @@ class InvertedIndex {
 public:
 	InvertedIndex() = default;
 	void updateDocumentBase(std::vector<std::string> inputDocs);
-	std::vector<Entry> getWordCount(const std::string& word);
+	std::vector<Entry> getWordCount(const std::string& word) const;
 	freqType getFreqDict();
 
 private:
-	freqType getWordsInFile(std::string filepath, int idDoc);
+	freqType getWords(std::string filepath, int idDoc) const;
 	std::vector<std::string> docs;
 	freqType freqDict;
 };

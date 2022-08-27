@@ -10,7 +10,7 @@ void InvertedIndex::updateDocumentBase(std::vector<std::string> inputDocs) {
 	for (size_t i = 0, ie = inputDocs.size(); i != ie; ++i) {
 		res.push_back(
 			std::async(
-				&InvertedIndex::getWordsInFile,
+				&InvertedIndex::getWords,
 				this,
 				inputDocs[i],
 				static_cast<int>(i)
@@ -19,15 +19,14 @@ void InvertedIndex::updateDocumentBase(std::vector<std::string> inputDocs) {
 	}
 	for (size_t i = 0, ie = inputDocs.size(); i != ie; ++i) {
 		auto r = res[i].get();
-		for (auto&& item : r)
-		{
+		for (auto&& item : r) {
 			auto key = item.first;
 			auto vec = item.second;
 			freqDict[key].insert(freqDict[key].end(), vec.begin(), vec.end());
 		}
 	}
 }
-std::vector<Entry> InvertedIndex::getWordCount(const std::string& word) {
+std::vector<Entry> InvertedIndex::getWordCount(const std::string& word) const {
 	std::vector<Entry> res{};
 	auto it = freqDict.find(word);
 	if (it == freqDict.end())
@@ -37,7 +36,7 @@ std::vector<Entry> InvertedIndex::getWordCount(const std::string& word) {
 	return res;
 }
 
-freqType InvertedIndex::getWordsInFile(std::string filepath, int idDoc) {
+freqType InvertedIndex::getWords(std::string filepath, int idDoc) const {
 	try {
 		if (!std::filesystem::exists(filepath))
 			throw ExceptionFileNotFound();

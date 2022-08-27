@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 
 TEST(SearchServer, search) {
-	std::vector<std::string> requests{
+	std::vector<std::string> requests {
 		"test1",
 		"test2",
 		"test3"
@@ -24,7 +24,7 @@ TEST(SearchServer, search) {
 	SearchServer searchServer(idx);
 	searchServer.setMaxResponses(3);
 	auto result = searchServer.search(requests);
-	std::vector<std::vector<RelativeIndex>> excepted{
+	std::vector<std::vector<RelativeIndex>> excepted {
 		{
 			{0, 1.0f},
 			{0, 0.0f},

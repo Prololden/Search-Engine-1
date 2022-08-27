@@ -19,10 +19,10 @@ class SearchServer {
 public:
 	SearchServer(InvertedIndex& idx) : index(idx) { };
 	std::vector<std::vector<RelativeIndex>> search(const
-		std::vector<std::string>& queries_input);
+		std::vector<std::string>& queries_input) const;
 	void setMaxResponses(int maxResponse);
 private:
-	std::vector<RelativeIndex> searchWord(std::string searchString);
+	std::vector<RelativeIndex> searchWord(std::string searchString) const;
 	InvertedIndex index;
 	int maxResponses = 5;
 };

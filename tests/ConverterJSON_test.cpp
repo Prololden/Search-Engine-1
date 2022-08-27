@@ -42,7 +42,7 @@ TEST(ConverterJSON, getResponsesLimit) {
 }
 
 TEST(ConverterJSON, getRequests) {
-	std::vector<std::string> req{
+	std::vector<std::string> req {
 		"test",
 		"test2",
 		"test3"
@@ -61,7 +61,7 @@ TEST(ConverterJSON, getRequests) {
 }
 
 TEST(ConverterJSON, getFiles) {
-	std::vector<std::string> files{
+	std::vector<std::string> files {
 		"files/text0.txt",
 		"files/text1.txt",
 		"files/text2.txt",
@@ -83,25 +83,25 @@ TEST(ConverterJSON, getFiles) {
 }
 
 TEST(ConverterJSON, putAnswers) {
-	std::vector<std::vector<std::pair<int, float>>> answers{
-		{
-			{1, 1.0f},
-			{3, 1.0f},
-			{0, 0.5f},
-			{4, 0.5f}
-		},
-		{
-			{1, 1.0f},
-			{4, 1.0f},
-			{3, 0.6669999957084656f}
-		},
-		{
-			{1, 1.0f},
-			{3, 1.0f},
-			{0, 0.5f},
-			{2, 0.5f}
-		}
-	};
+	std::vector<std::vector<std::pair<int, float>>> answers {
+			{
+				{1, 1.0f},
+				{3, 1.0f},
+				{0, 0.5f},
+				{4, 0.5f}
+			},
+			{
+				{1, 1.0f},
+				{4, 1.0f},
+				{3, 0.6669999957084656f}
+			},
+			{
+				{1, 1.0f},
+				{3, 1.0f},
+				{0, 0.5f},
+				{2, 0.5f}
+			}
+		};
 	json data = R"({
 		"answers": {
 			"request000": {

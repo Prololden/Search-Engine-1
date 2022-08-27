@@ -43,7 +43,12 @@ TEST(InvertedIndex, getWordCount) {
 	file.close();
 
 	InvertedIndex idx;
-	idx.updateDocumentBase({ "testIndex0.txt", "testIndex1.txt", "testIndex2.txt", "testIndex3.txt" });
+	idx.updateDocumentBase({
+			"testIndex0.txt",
+			"testIndex1.txt",
+			"testIndex2.txt",
+			"testIndex3.txt"
+		});
 
 	std::remove("testIndex0.txt");
 	std::remove("testIndex1.txt");
