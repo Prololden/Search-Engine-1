@@ -1,5 +1,7 @@
 ﻿#include "SearchEngine.h"
 
+SearchServer::SearchServer(InvertedIndex& idx) : index(idx) { };
+
 std::vector<std::vector<RelativeIndex>> SearchServer::search(const
 	std::vector<std::string>& queries_input) const {
 	std::vector<std::vector<RelativeIndex>> res;

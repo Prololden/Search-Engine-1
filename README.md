@@ -34,9 +34,13 @@ Step 1. Create build folder in project folder:
 
 Step 2. Build project with CMake:
 
-	cmake .. & cmake --build . --config Release
+	cmake .. & cmake --build . --config Release --target SearchEngine
 
 As a result, the project file will be placed in the Release folder in the root directory. The test file will be placed in the tests/Release subdirectory.
+
+Step 3. Start application:
+
+    .\Release\SearchEngine
 
 ### Methods
 

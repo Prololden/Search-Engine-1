@@ -1,5 +1,7 @@
 #include "ConverterJSON.h"
 
+ConverterJSON::ConverterJSON() : isCfgOpen(false), isReqOpen(false) { };
+
 std::vector<std::string> ConverterJSON::getRequests() const {
 	return requests;
 }
@@ -34,6 +36,14 @@ void ConverterJSON::putAnswers(
 	}
 
 	std::ofstream file("answers.json");
+	try {
+		if (!file.is_open())
+			throw ExceptionAnswersNotOpen();
+	}
+	catch (ExceptionAnswersNotOpen e) {
+		std::cerr << e.what() << std::endl;
+		return;
+	}
 	file << data.dump(4);
 	file.close();
 }

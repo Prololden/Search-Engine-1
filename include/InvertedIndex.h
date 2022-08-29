@@ -8,6 +8,7 @@
 #include <iterator>
 #include <fstream>
 #include <iostream>
+#include "customExceptions.h"
 
 struct Entry {
 	int docId;

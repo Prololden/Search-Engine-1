@@ -17,7 +17,8 @@ struct RelativeIndex {
 };
 class SearchServer {
 public:
-	SearchServer(InvertedIndex& idx) : index(idx) { };
+	SearchServer() = delete;
+	SearchServer(InvertedIndex& idx);
 	std::vector<std::vector<RelativeIndex>> search(const
 		std::vector<std::string>& queries_input) const;
 	void setMaxResponses(int maxResponse);

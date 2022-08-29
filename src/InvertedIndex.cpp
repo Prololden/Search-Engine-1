@@ -1,5 +1,4 @@
 #include "InvertedIndex.h"
-#include "Exceptions.h"
 
 freqType InvertedIndex::getFreqDict() {
 	return freqDict;

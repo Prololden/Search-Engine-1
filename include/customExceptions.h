@@ -1,3 +1,5 @@
+#pragma once
+
 class ExceptionConfigNotFound {
 public:
 	const char* what() {
@@ -16,5 +18,12 @@ class ExceptionFileNotFound {
 public:
 	const char* what() {
 		return "File not found.";
+	}
+};
+
+class ExceptionAnswersNotOpen {
+public:
+	const char* what() {
+		return "answers.json cannot opened.";
 	}
 };
