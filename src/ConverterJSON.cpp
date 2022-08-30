@@ -28,9 +28,9 @@ void ConverterJSON::putAnswers(
 			data["answers"][reqId]["result"] = "false";
 		else {
 			data["answers"][reqId]["result"] = "true";
-			for (const auto& rel : answers[i]) {
-				if (rel.second > 0.0)
-					data["answers"][reqId]["relevance"] += { {"doc_id", rel.first}, { "rank", rel.second }};
+			for (const auto& element : answers[i]) {
+				if (element.second > 0.0)
+					data["answers"][reqId]["relevance"] += { {"doc_id", element.first}, { "rank", element.second }};
 			}
 		}
 	}
@@ -53,11 +53,11 @@ void ConverterJSON::readConfig(std::filesystem::path path) {
 		std::cerr << e.what() << std::endl;
 		return;
 	}
-	std::ifstream f(path);
-	if (f.is_open()) {
+	std::ifstream file(path);
+	if (file.is_open()) {
 		isCfgOpen = true;
-		f >> config;
-		f.close();
+		file >> config;
+		file.close();
 		if (config.empty()) {
 			throw ExceptionConfigEmpty();
 			return;
@@ -74,12 +74,12 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 		std::cerr << e.what() << std::endl;
 		return;
 	}
-	std::ifstream f(path);
-	if (f.is_open()) {
+	std::ifstream file(path);
+	if (file.is_open()) {
 		isReqOpen = true;
 		json _requests;
-		f >> _requests;
-		f.close();
+		file >> _requests;
+		file.close();
 		if (_requests.empty()) {
 			throw ExceptionRequestsEmpty();
 			return;

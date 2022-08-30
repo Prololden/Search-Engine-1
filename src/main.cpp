@@ -3,13 +3,13 @@
 #include "InvertedIndex.h"
 int main()
 {
-	std::filesystem::path cfg("config.json");
-	std::filesystem::path req("requests.json");
+	std::filesystem::path configPath("config.json");
+	std::filesystem::path requestsPath("requests.json");
 
-	ConverterJSON cj;
+	ConverterJSON converterJson;
 	try {
-		cj.readConfig(cfg);
-		cj.readRequests(req);
+		converterJson.readConfig(configPath);
+		converterJson.readRequests(requestsPath);
 	}
 	catch (ExceptionConfigEmpty e) {
 		std::cerr << e.what() << std::endl;
@@ -19,14 +19,17 @@ int main()
 		std::cerr << e.what() << std::endl;
 		return 2;
 	}
-	if (!cj.isConfigOpen() || !cj.isRequestsOpen())
+	if (!converterJson.isConfigOpen() || !converterJson.isRequestsOpen())
 		return 3;
+
 	InvertedIndex idx;
-	idx.updateDocumentBase(cj.getFiles());
-	auto requests = cj.getRequests();
+	idx.updateDocumentBase(converterJson.getFiles());
+	auto requests = converterJson.getRequests();
+
 	SearchServer searchServer(idx);
-	searchServer.setMaxResponses(cj.getResponsesLimit());
+	searchServer.setMaxResponses(converterJson.getResponsesLimit());
 	auto answers = searchServer.search(requests);
+
 	std::vector<std::vector<std::pair<int, float>>> result;
 	size_t count = 0;
 	for (size_t i = 0, ie = answers.size(); i != ie; ++i) {
@@ -37,7 +40,7 @@ int main()
 		}
 	}
 	try {
-		cj.putAnswers(result);
+		converterJson.putAnswers(result);
 	}
 	catch (ExceptionAnswersNotOpen e) {
 		std::cerr << e.what() << std::endl;

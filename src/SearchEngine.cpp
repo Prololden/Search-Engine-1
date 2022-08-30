@@ -4,57 +4,58 @@ SearchServer::SearchServer(InvertedIndex& idx) : index(idx) { };
 
 std::vector<std::vector<RelativeIndex>> SearchServer::search(const
 	std::vector<std::string>& queries_input) const {
-	std::vector<std::vector<RelativeIndex>> res;
+	std::vector<std::vector<RelativeIndex>> result;
 
 	for (auto&& e : queries_input) {
-		res.push_back(searchWord(e));
+        result.push_back(searchWord(e));
 	}
-	return res;
+
+	return result;
 }
 
 std::vector<RelativeIndex> SearchServer::searchWord(std::string searchString) const {
-	std::vector<RelativeIndex> res(maxResponses);
+	std::vector<RelativeIndex> result(maxResponses);
 	std::transform(searchString.begin(), searchString.end(), searchString.begin(), tolower);
 
 	std::istringstream str(searchString);
 	std::vector<std::string> words = { std::istream_iterator<std::string>(str), std::istream_iterator<std::string>() };
-	std::unordered_map<size_t, float> rel;
+	std::unordered_map<size_t, float> relativeMap;
     float min = 0;
 
-	for (auto& e : words) {
-		for (auto& en : index.getWordCount(e)) {
-			rel[en.docId] += en.count;
+	for (auto& element : words) {
+		for (auto& entry : index.getWordCount(element)) {
+            relativeMap[entry.docId] += entry.count;
 		}
 	}
 
-	if (rel.empty())
+	if (relativeMap.empty())
 		return {};
 
-    for (auto&& e : rel) {
-        if (e.second > min) {
-            RelativeIndex rdx = { e.first, e.second };
+    for (auto&& element : relativeMap) {
+        if (element.second > min) {
+            RelativeIndex relativeIndex = { element.first, element.second };
 
-            for (size_t i = 0, ie = res.size(); i != ie; ++i) {
-                if (e.second > res[i].rank) {
-                    res.insert(res.begin() + i, rdx);
+            for (size_t i = 0, ie = result.size(); i != ie; ++i) {
+                if (element.second > result[i].rank) {
+                    result.insert(result.begin() + i, relativeIndex);
                     break;
                 }
             }
 
-            res.pop_back();
-            min = res.back().rank;
+            result.pop_back();
+            min = result.back().rank;
         }
     }
 
-    float max = res[0].rank;
-    for (auto&& i : res) {
-        i.rank /= max;
+    float max = result[0].rank;
+    for (auto&& element : result) {
+        element.rank /= max;
         std::stringstream ss;
-        ss << std::setprecision(3) << i.rank;
-        ss >> i.rank;
+        ss << std::setprecision(3) << element.rank;
+        ss >> element.rank;
     }
 
-	return res;
+	return result;
 }
 
 void SearchServer::setMaxResponses(int maxResponse) {
