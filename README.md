@@ -66,6 +66,7 @@ Step 3. Start application:
 ### Starting
 
 To start using the application, create two files "config.json" and "reguests.json".
+
 **config.json example**
 	
 	{
