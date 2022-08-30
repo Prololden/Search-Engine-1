@@ -4,7 +4,7 @@ Application for search text in files.
 * [Description](#description)
 * [Build](#build)
 * [Methods](#mthods)
-* [Strarting](#starting)
+* [Starting](#starting)
 
 ### Description
 
