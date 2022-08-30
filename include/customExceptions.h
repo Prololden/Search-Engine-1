@@ -27,3 +27,17 @@ public:
 		return "answers.json cannot opened.";
 	}
 };
+
+class ExceptionConfigEmpty {
+public:
+	const char* what() {
+		return "Configure file is empty.";
+	}
+};
+
+class ExceptionRequestsEmpty {
+public:
+	const char* what() {
+		return "Requests file is empty.";
+	}
+};

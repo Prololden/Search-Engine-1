@@ -7,10 +7,20 @@ int main()
 	std::filesystem::path req("requests.json");
 
 	ConverterJSON cj;
-	cj.readConfig(cfg);
-	cj.readRequests(req);
-	if (!cj.isConfigOpen() || !cj.isRequestsOpen())
+	try {
+		cj.readConfig(cfg);
+		cj.readRequests(req);
+	}
+	catch (ExceptionConfigEmpty e) {
+		std::cerr << e.what() << std::endl;
 		return 1;
+	}
+	catch (ExceptionRequestsEmpty e) {
+		std::cerr << e.what() << std::endl;
+		return 2;
+	}
+	if (!cj.isConfigOpen() || !cj.isRequestsOpen())
+		return 3;
 	InvertedIndex idx;
 	idx.updateDocumentBase(cj.getFiles());
 	auto requests = cj.getRequests();
@@ -26,7 +36,13 @@ int main()
 			count++;
 		}
 	}
-	cj.putAnswers(result);
+	try {
+		cj.putAnswers(result);
+	}
+	catch (ExceptionAnswersNotOpen e) {
+		std::cerr << e.what() << std::endl;
+		return 4;
+	}
 
 	std::cout << "Searching finished. Put answers: " << count << "!" << std::endl;
 }
