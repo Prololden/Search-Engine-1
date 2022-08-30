@@ -30,11 +30,11 @@ searching results.
 
 Step 1. Create build folder in project folder:
 
-	mkdir build & cd build
+	mkdir build && cd build
 
 Step 2. Build project with CMake:
 
-	cmake .. & cmake --build . --config Release --target SearchEngine
+	cmake .. && cmake --build . --config Release --target SearchEngine
 
 As a result, the project file will be placed in the Release folder in the root directory. The test file will be placed in the tests/Release subdirectory.
 
