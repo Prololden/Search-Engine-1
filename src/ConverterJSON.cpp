@@ -38,7 +38,6 @@ void ConverterJSON::putAnswers(
 	std::ofstream file("answers.json");
 	if (!file.is_open()) {
 		throw ExceptionAnswersNotOpen();
-		return;
 	}
 	file << data.dump(4);
 	file.close();
@@ -60,7 +59,6 @@ void ConverterJSON::readConfig(std::filesystem::path path) {
 		file.close();
 		if (config.empty()) {
 			throw ExceptionConfigEmpty();
-			return;
 		}
 	}
 }
@@ -82,7 +80,6 @@ void ConverterJSON::readRequests(std::filesystem::path path) {
 		file.close();
 		if (_requests.empty()) {
 			throw ExceptionRequestsEmpty();
-			return;
 		}
 		requests = { _requests["requests"].begin(), _requests["requests"].end() };
 	}
