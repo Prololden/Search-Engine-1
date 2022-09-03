@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include "customExceptions.h"
+#include "thread-pool-3.3.0/BS_thread_pool.hpp"
 
 struct Entry {
 	int docId;

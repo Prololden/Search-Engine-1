@@ -6,15 +6,15 @@ freqType InvertedIndex::getFreqDict() {
 
 void InvertedIndex::updateDocumentBase(std::vector<std::string> inputDocs) {
 	std::vector<std::future<freqType>> result;
+	BS::thread_pool pool;
 	for (size_t i = 0, ie = inputDocs.size(); i != ie; ++i) {
-		result.push_back(
-			std::async(
+		auto funcPool = pool.submit(
 				&InvertedIndex::getWords,
 				this,
 				inputDocs[i],
 				static_cast<int>(i)
-			)
-		);
+				);
+		result.push_back(std::move(funcPool));
 	}
 	for (size_t i = 0, ie = inputDocs.size(); i != ie; ++i) {
 		auto r = result[i].get();

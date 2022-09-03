@@ -28,7 +28,10 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(MY_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(MY_INCLUDE_DIR
+  ${CMAKE_SOURCE_DIR}/tridparty
+  ${CMAKE_SOURCE_DIR}/include
+)
 set(MY_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 
 include(FetchContent)
