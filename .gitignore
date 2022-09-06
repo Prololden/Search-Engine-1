@@ -35,3 +35,5 @@ out/
 CMakePresets.json
 *.ilk
 *.pdb
+
+.vscode/
